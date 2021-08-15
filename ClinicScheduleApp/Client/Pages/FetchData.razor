@@ -1,0 +1,47 @@
+@page "/fetchdata"
+@using ClinicScheduleApp.Shared
+@inject HttpClient Http
+
+<h1>Clinic scedule</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (schedules == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var schedule in schedules)
+            {
+                <tr>
+                    <td>@schedule.SceduleId</td>
+                    <td>@schedule.Date.ToShortDateString()</td>
+                    <td>@schedule.Time.ToShortTimeString()</td>
+                    <td>@schedule.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+ 
+    private IEnumerable<Schedule> schedules;
+
+    protected override async Task OnInitializedAsync()
+    {
+        schedules = await Http.GetFromJsonAsync<IEnumerable<Schedule>>("api/Clinic");
+    }
+
+}
