@@ -9,7 +9,6 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 
-
 namespace ClinicScheduleApp.Server
 {
     public class Startup
@@ -28,7 +27,9 @@ namespace ClinicScheduleApp.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddDbContext<ClinicDBContext.ClinicDBContext>(options=>options.UseNpgsql("Server=192.168.0.110,Port=5432,UserId=postgres,Password=gfhjkm_1,Database=postgres"));
+            services.AddDbContext<ClinicDBContext.ClinicDBContext>(options =>
+                options.UseSqlServer("Server=localhost,Port=5432,UserId=user1,Password=sa,Database=TestDb"));
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
