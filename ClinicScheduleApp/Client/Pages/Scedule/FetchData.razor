@@ -1,0 +1,59 @@
+﻿@page "/schedule"
+@inject HttpClient client
+@inject IJSRuntime js
+
+<h3>FetchData</h3>
+
+<div class="form-group">
+    <a class="btn btn-success" href="developer/create"><i class="oi oi-plus"></i> Create New</a>
+</div>
+<br>
+@if (schedules == null)
+{
+    <text>Loading...</text>
+}
+else if (schedules.Length == 0)
+{
+    <text>No Records Found.</text>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date Start</th>
+                <th>Time Start</th>
+                <th>Time End</th>
+                <th>Description</th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Schedule schedule in schedules)
+            {
+                <tr>
+                    <td>@schedule.Id</td>
+                    <td>@schedule.DateTimeStart.ToShortDateString()</td>
+                    <td>@schedule.DateTimeStart.TimeOfDay</td>
+                    <td>@schedule.DateTimeEnd.TimeOfDay</td>
+                    <td>@schedule.Description</td>
+
+                    <td>
+                        <a class="btn btn-success" href="developer/edit/@schedule.Id">Edit</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    Schedule[] schedules { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        schedules = await client.GetFromJsonAsync<Schedule[]>("api/Clinic");
+    }
+}

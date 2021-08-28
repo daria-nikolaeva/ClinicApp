@@ -4,8 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using ClinicScheduleApp.Shared;
 using Microsoft.AspNetCore.Mvc;
-using ClinicScheduleApp.Server.ClinicDBContext;
-using ClinicScheduleApp.Server.Operations;
+using ClinicScheduleApp.Server;
+
+using Microsoft.EntityFrameworkCore;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ClinicScheduleApp.Server.Controllers
@@ -14,17 +15,17 @@ namespace ClinicScheduleApp.Server.Controllers
     [ApiController]
     public class ClinicController : ControllerBase
     {
-        private readonly ClinicDBContext.ClinicDBContext _db;
-        public ClinicController(ClinicDBContext.ClinicDBContext db)
+        private readonly ClinicDBContext _db;
+        public ClinicController(ClinicDBContext db)
         {
             _db = db;
         }
         // GET: api/<ClinicController>
         [HttpGet]
-        public IEnumerable<Schedule> Get()
+        public async Task<IActionResult> Get()
         {
-           List<Schedule> schedules = ClinicOperations.GetAllSchedule(_db).Result;
-            return  schedules;
+           var schedules = await _db.Schedules.ToListAsync();
+            return  Ok(schedules);
         }
 
         // GET api/<ClinicController>/5

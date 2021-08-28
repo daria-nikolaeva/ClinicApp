@@ -16,20 +16,22 @@ else
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Date</th>
-                <th>Time</th>
+                <th>Date Start</th>
+                <th>Time Start</th>
+                <th>Time End</th>
                 <th>Description</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var schedule in schedules)
             {
-                <tr>
-                    <td>@schedule.Id</td>
-                    <td>@schedule.Date.ToShortDateString()</td>
-                    <td>@schedule.Time.ToShortTimeString()</td>
-                    <td>@schedule.Description</td>
-                </tr>
+            <tr>
+                <td>@schedule.Id</td>
+                <td>@schedule.DateTimeStart.Date</td>
+                <td>@schedule.DateTimeStart.TimeOfDay</td>
+                <td>@schedule.DateTimeEnd.TimeOfDay</td>
+                <td>@schedule.Description</td>
+            </tr>
             }
         </tbody>
     </table>

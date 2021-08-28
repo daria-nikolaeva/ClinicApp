@@ -27,7 +27,7 @@ namespace ClinicScheduleApp.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddDbContext<ClinicDBContext.ClinicDBContext>(options =>
+            services.AddDbContext<ClinicDBContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
            
         }
